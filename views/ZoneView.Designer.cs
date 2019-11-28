@@ -1,6 +1,6 @@
 ﻿namespace stade
 {
-    partial class Zone
+    partial class ZoneView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.insertion = new System.Windows.Forms.GroupBox();
+            this.couleur = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.categ = new System.Windows.Forms.ComboBox();
             this.simuler = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -51,12 +54,10 @@
             this.clear = new System.Windows.Forms.Button();
             this.points = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.des = new System.Windows.Forms.TextBox();
+            this.desZone = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
-            this.categ = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.insertion.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.espCote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lngCh)).BeginInit();
@@ -65,32 +66,60 @@
             ((System.ComponentModel.ISupportInitialize)(this.num1)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // insertion
             // 
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.categ);
-            this.groupBox1.Controls.Add(this.simuler);
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.num1);
-            this.groupBox1.Controls.Add(this.sens);
-            this.groupBox1.Controls.Add(this.direction);
-            this.groupBox1.Controls.Add(this.stade);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.enregistrer);
-            this.groupBox1.Controls.Add(this.clear);
-            this.groupBox1.Controls.Add(this.points);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.des);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 571);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "zone";
+            this.insertion.Controls.Add(this.couleur);
+            this.insertion.Controls.Add(this.label11);
+            this.insertion.Controls.Add(this.categ);
+            this.insertion.Controls.Add(this.simuler);
+            this.insertion.Controls.Add(this.groupBox2);
+            this.insertion.Controls.Add(this.label6);
+            this.insertion.Controls.Add(this.label5);
+            this.insertion.Controls.Add(this.label4);
+            this.insertion.Controls.Add(this.num1);
+            this.insertion.Controls.Add(this.sens);
+            this.insertion.Controls.Add(this.direction);
+            this.insertion.Controls.Add(this.stade);
+            this.insertion.Controls.Add(this.label3);
+            this.insertion.Controls.Add(this.enregistrer);
+            this.insertion.Controls.Add(this.clear);
+            this.insertion.Controls.Add(this.points);
+            this.insertion.Controls.Add(this.label2);
+            this.insertion.Controls.Add(this.desZone);
+            this.insertion.Controls.Add(this.label1);
+            this.insertion.Location = new System.Drawing.Point(12, 12);
+            this.insertion.Name = "insertion";
+            this.insertion.Size = new System.Drawing.Size(200, 571);
+            this.insertion.TabIndex = 0;
+            this.insertion.TabStop = false;
+            this.insertion.Text = "zone";
+            // 
+            // couleur
+            // 
+            this.couleur.Location = new System.Drawing.Point(2, 144);
+            this.couleur.Name = "couleur";
+            this.couleur.Size = new System.Drawing.Size(75, 23);
+            this.couleur.TabIndex = 24;
+            this.couleur.Text = "couleur";
+            this.couleur.UseVisualStyleBackColor = true;
+            this.couleur.Click += new System.EventHandler(this.couleur_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 271);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(69, 17);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Categorie";
+            // 
+            // categ
+            // 
+            this.categ.FormattingEnabled = true;
+            this.categ.Location = new System.Drawing.Point(80, 265);
+            this.categ.Name = "categ";
+            this.categ.Size = new System.Drawing.Size(114, 24);
+            this.categ.TabIndex = 22;
             // 
             // simuler
             // 
@@ -112,7 +141,7 @@
             this.groupBox2.Controls.Add(this.largCh);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.espAv);
-            this.groupBox2.Location = new System.Drawing.Point(1, 340);
+            this.groupBox2.Location = new System.Drawing.Point(1, 389);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(193, 138);
             this.groupBox2.TabIndex = 20;
@@ -134,6 +163,7 @@
             this.espCote.Name = "espCote";
             this.espCote.Size = new System.Drawing.Size(112, 22);
             this.espCote.TabIndex = 20;
+            this.espCote.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.espCote.Value = new decimal(new int[] {
             2,
             0,
@@ -155,8 +185,9 @@
             this.lngCh.Name = "lngCh";
             this.lngCh.Size = new System.Drawing.Size(112, 22);
             this.lngCh.TabIndex = 11;
+            this.lngCh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.lngCh.Value = new decimal(new int[] {
-            6,
+            20,
             0,
             0,
             0});
@@ -176,8 +207,9 @@
             this.largCh.Name = "largCh";
             this.largCh.Size = new System.Drawing.Size(112, 22);
             this.largCh.TabIndex = 12;
+            this.largCh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.largCh.Value = new decimal(new int[] {
-            5,
+            20,
             0,
             0,
             0});
@@ -197,6 +229,7 @@
             this.espAv.Name = "espAv";
             this.espAv.Size = new System.Drawing.Size(112, 22);
             this.espAv.TabIndex = 13;
+            this.espAv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.espAv.Value = new decimal(new int[] {
             3,
             0,
@@ -241,6 +274,13 @@
             this.num1.Name = "num1";
             this.num1.Size = new System.Drawing.Size(114, 22);
             this.num1.TabIndex = 10;
+            this.num1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.num1.ThousandsSeparator = true;
+            this.num1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // sens
             // 
@@ -316,12 +356,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Points";
             // 
-            // des
+            // desZone
             // 
-            this.des.Location = new System.Drawing.Point(80, 52);
-            this.des.Name = "des";
-            this.des.Size = new System.Drawing.Size(114, 22);
-            this.des.TabIndex = 1;
+            this.desZone.Location = new System.Drawing.Point(80, 52);
+            this.desZone.Name = "desZone";
+            this.desZone.Size = new System.Drawing.Size(114, 22);
+            this.desZone.TabIndex = 1;
             // 
             // label1
             // 
@@ -341,35 +381,19 @@
             this.panel.TabIndex = 1;
             this.panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_MouseClick);
             // 
-            // categ
-            // 
-            this.categ.FormattingEnabled = true;
-            this.categ.Location = new System.Drawing.Point(80, 265);
-            this.categ.Name = "categ";
-            this.categ.Size = new System.Drawing.Size(114, 24);
-            this.categ.TabIndex = 22;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 271);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(69, 17);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "Categorie";
-            // 
-            // Zone
+            // ZoneView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1103, 595);
             this.Controls.Add(this.panel);
-            this.Controls.Add(this.groupBox1);
-            this.Name = "Zone";
+            this.Controls.Add(this.insertion);
+            this.Name = "ZoneView";
             this.Text = "Zone";
             this.Load += new System.EventHandler(this.Zone_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Resize += new System.EventHandler(this.Zone_Resize);
+            this.insertion.ResumeLayout(false);
+            this.insertion.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.espCote)).EndInit();
@@ -383,10 +407,10 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox insertion;
         private System.Windows.Forms.ListBox points;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox des;
+        private System.Windows.Forms.TextBox desZone;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Button enregistrer;
@@ -411,5 +435,6 @@
         private System.Windows.Forms.ComboBox direction;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox categ;
+        private System.Windows.Forms.Button couleur;
     }
 }
