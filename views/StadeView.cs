@@ -18,9 +18,6 @@ namespace stade {
         public StadeView() {
             InitializeComponent();
             object[] temp = new CRUD().select("stade", new Stade(), null, null);
-            if(temp == null) {
-                return;
-            }
             Stade st = null;
             for (int i = 0; i < temp.Length; i++) {
                 st = (Stade)temp[i];
@@ -40,6 +37,14 @@ namespace stade {
             StadeService.insertStade(this.desStade.Text, StadeService.GetPointString(this.points));
             ZoneView zone = new ZoneView(CRUD.currentId("stade"));
             zone.Show();
+            object[] temp = new CRUD().select("stade", new Stade(), null, null);
+            Stade st = null;
+            this.stds = new Dictionary<string, string>();
+            for (int i = 0; i < temp.Length; i++) {
+                st = (Stade)temp[i];
+                this.stds.Add(st.Id, st.Des);
+            }
+            this.stades.DataSource = new BindingSource(this.stds, null);
         }
 
         private void Stade_Resize(object sender, EventArgs e) {
@@ -48,21 +53,24 @@ namespace stade {
             int h = this.Size.Height - margin;
             this.panel.Size = new Size(w, h);
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
+            DrawService.DrawPolygon(this.panel, this.points, this.pen);
         }
 
         private void panel_MouseClick(object sender, MouseEventArgs e) {
             this.points.Items.Add(e.X + ";" + e.Y);
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
+            DrawService.DrawPolygon(this.panel, this.points, this.pen);
         }
 
         private void Stade_Load(object sender, EventArgs e) {
+            this.stades.DropDownStyle = ComboBoxStyle.DropDownList;
             this.Stade_Resize(sender, e);
-            this.stades.DataSource = new BindingSource(this.stds, null);
-            this.stades.DisplayMember = "Value";
-            this.stades.ValueMember = "key";
-            this.stades.SelectedIndex = 0;
+            if(this.stds.Count > 0) {
+                this.stades.DataSource = new BindingSource(this.stds, null);
+                this.stades.DisplayMember = "Value";
+                this.stades.ValueMember = "key";
+                this.stades.SelectedIndex = 0;
+            }
         }
 
         private void points_MouseClick(object sender, MouseEventArgs e) {
@@ -82,7 +90,7 @@ namespace stade {
         private void couleur_Click(object sender, EventArgs e) {
             this.pen.Color = DrawService.getColor(this.pen);
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
+            DrawService.DrawPolygon(this.panel, this.points, this.pen);
         }
 
         private void choisir_Click(object sender, EventArgs e) {

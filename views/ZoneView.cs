@@ -21,6 +21,7 @@ namespace stade {
         private Dictionary<string, string> categories = new Dictionary<string, string>();
         private Pen pen = new Pen(Color.DarkGray);
         private Stade stadeData;
+        private Zone[] zones;
 
 
         internal Stade StadeData { get => stadeData; set => stadeData = value; }
@@ -40,6 +41,7 @@ namespace stade {
                 ct = (Categ)temp[i];
                 this.categories.Add(ct.Id, ct.Des);
             }
+            this.zones = StadeService.getZones(idStade);
             InitializeComponent();
             InitData();
         }
@@ -58,25 +60,37 @@ namespace stade {
             sens2.Add("bh", "B en H");
         }
         private void Zone_Load(object sender, EventArgs e) {
-            this.direction.DataSource = new BindingSource(this.dir, null);
-            this.direction.DisplayMember = "Value";
-            this.direction.ValueMember = "key";
-            this.direction.SelectedIndex = 0;
+            this.stade.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.direction.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.sens.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.categ.DropDownStyle = ComboBoxStyle.DropDownList;
+            if (this.dir.Count > 0) {
+                this.direction.DataSource = new BindingSource(this.dir, null);
+                this.direction.DisplayMember = "Value";
+                this.direction.ValueMember = "key";
+                this.direction.SelectedIndex = 0;
+            }
 
-            this.sens.DataSource = new BindingSource(this.sens2, null);
-            this.sens.DisplayMember = "Value";
-            this.sens.ValueMember = "key";
-            this.sens.SelectedIndex = 0;
+            if (this.sens2.Count > 0) {
+                this.sens.DataSource = new BindingSource(this.sens2, null);
+                this.sens.DisplayMember = "Value";
+                this.sens.ValueMember = "key";
+                this.sens.SelectedIndex = 0;
+            }
 
-            this.categ.DataSource = new BindingSource(this.categories, null);
-            this.categ.DisplayMember = "Value";
-            this.categ.ValueMember = "key";
-            this.categ.SelectedIndex = 0;
+            if (this.categories.Count > 0) {
+                this.categ.DataSource = new BindingSource(this.categories, null);
+                this.categ.DisplayMember = "Value";
+                this.categ.ValueMember = "key";
+                this.categ.SelectedIndex = 0;
+            }
 
-            this.stade.DataSource = new BindingSource(this.stades, null);
-            this.stade.DisplayMember = "Value";
-            this.stade.ValueMember = "key";
-            this.stade.SelectedIndex = this.stades.Keys.ToList<string>().IndexOf(this.stadeData.Id);
+            if (this.stades.Count > 0) {
+                this.stade.DataSource = new BindingSource(this.stades, null);
+                this.stade.DisplayMember = "Value";
+                this.stade.ValueMember = "key";
+                this.stade.SelectedIndex = this.stades.Keys.ToList<string>().IndexOf(this.stadeData.Id);
+            }
 
             this.Zone_Resize(sender, e);
         }
@@ -90,7 +104,7 @@ namespace stade {
                 }
                 this.points.Items.Add(e.X + ";" + e.Y);
                 this.panel.Refresh();
-                DrawService.DrawZone(this.panel, this.points, this.pen);
+                DrawService.DrawPolygon(this.panel, this.points, this.pen);
             }
         }
 
@@ -118,7 +132,8 @@ namespace stade {
                 Convert.ToSingle(this.lngCh.Value), Convert.ToSingle(this.largCh.Value),
                 Convert.ToSingle(this.espAv.Value), Convert.ToSingle(this.espCote.Value)
             );
-            ;
+            this.zones = StadeService.getZones(this.StadeData.Id);
+            this.points.Items.Clear();
         }
 
         private void points_KeyUp(object sender, KeyEventArgs e) {
@@ -145,8 +160,7 @@ namespace stade {
                 Convert.ToSingle(this.espCote.Value)
             );
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
-            DrawService.Show(this.panel, zone, new Pen(Color.Red));
+            DrawService.ShowZone(this.panel, zone, new Pen(Color.BurlyWood));
         }
 
         private void direction_SelectedValueChanged(object sender, EventArgs e) {
@@ -164,17 +178,19 @@ namespace stade {
             int h = this.Size.Height - margin;
             this.panel.Size = new Size(w, h);
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
+            DrawService.DrawPolygon(this.panel, this.points, this.pen);
         }
 
         private void couleur_Click(object sender, EventArgs e) {
             this.pen.Color = DrawService.getColor(this.pen);
             this.panel.Refresh();
-            DrawService.DrawZone(this.panel, this.points, this.pen);
+            DrawService.DrawPolygon(this.panel, this.points, this.pen);
         }
 
         private void panel_Paint(object sender, PaintEventArgs e) {
-            DrawService.DrawZone(this.panel, StadeService.GetPoints(this.stadeData.Points), new Pen(Color.Green));
+            DrawService.DrawPolygon(this.panel, StadeService.GetListBox(this.stadeData.Points), new Pen(Color.Green));
+            this.zones = StadeService.getZones(this.StadeData.Id);
+            DrawService.ShowZone(this.panel, this.zones, this.pen);
         }
     }
 }

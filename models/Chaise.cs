@@ -15,6 +15,7 @@ namespace stade.models {
         private int dp = 1;
         public int numZone;
 
+        public Chaise() { }
         public Chaise(float x, float y, int numZone, int num) {
             this.x = x;
             this.y = y;

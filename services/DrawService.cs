@@ -10,16 +10,22 @@ using System.Windows.Forms;
 namespace stade.services {
     class DrawService {
 
-        public static void Show(Panel panel, Zone zone, Pen pen) {
-            Graphics g = panel.CreateGraphics();
-            RectangleF[] rect = new RectangleF[1];
-            for (int i = 0; i < zone.chaises.Count; i++) {
-                rect[0] = new RectangleF(zone.chaises[i].X, zone.chaises[i].Y, zone.LngCh, zone.LargCh);
-                g.DrawString((zone.chaises[i].Num).ToString(), new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, rect[0]);
-                g.DrawRectangles(pen, rect);
+        public static void ShowZone(Panel panel, Zone[] zones, Pen pen) {
+            for (int i = 0; i < zones.Length; i++) {
+                DrawService.ShowZone(panel, zones[i], pen);
             }
         }
-        public static void DrawZone(Panel panel, ListBox data, Pen pen) {
+        public static void ShowZone(Panel panel, Zone zone, Pen pen) {
+            Graphics g = panel.CreateGraphics();
+            RectangleF[] rect = new RectangleF[1];
+            DrawService.DrawPolygon(panel, StadeService.GetListBox(zone.Points), pen);
+            for (int i = 0; i < zone.chaises.Count; i++) {
+                rect[0] = new RectangleF(zone.chaises[i].X, zone.chaises[i].Y, zone.LngCh, zone.LargCh);
+                g.DrawString((zone.chaises[i].numZone).ToString(), new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, rect[0]);
+                g.DrawRectangles(new Pen(Color.Red), rect);
+            }
+        }
+        public static void DrawPolygon(Panel panel, ListBox data, Pen pen) {
             Graphics g = panel.CreateGraphics();
             int nbPts = data.Items.Count;
             if (nbPts == 0) {
@@ -37,7 +43,7 @@ namespace stade.services {
         public static void markPoint(ListBox points, Panel panel, Pen pen) {
             if (points.SelectedIndex >= 0) {
                 string[] point = points.SelectedItem.ToString().Split(';');
-                DrawService.DrawZone(panel, points, pen);
+                DrawService.DrawPolygon(panel, points, pen);
                 int dim = 5;
                 int moitie = dim / 2;
                 panel.CreateGraphics().FillRectangle(Brushes.Red, float.Parse(point[0]) - moitie, float.Parse(point[1]) - moitie, dim, dim);
@@ -48,7 +54,7 @@ namespace stade.services {
             if (keyCode.ToString().Equals("delete", StringComparison.CurrentCultureIgnoreCase) && points.SelectedIndex >= 0) {
                 points.Items.RemoveAt(points.SelectedIndex);
                 panel.Refresh();
-                DrawService.DrawZone(panel, points, pen);
+                DrawService.DrawPolygon(panel, points, pen);
             }
         }
 

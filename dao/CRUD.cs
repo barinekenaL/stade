@@ -52,6 +52,8 @@ namespace stade.dao {
                                 property.SetValue(temp, reader.GetDateTime(i), null);
                             } else if (type.Equals("String")) {
                                 property.SetValue(temp, reader.GetString(i), null);
+                            } else if (type.Equals("Single")) {
+                                property.SetValue(temp, Convert.ToSingle(reader.GetDecimal(i)), null);
                             } else {
                                 throw new Exception("Type not found in select !!!");
                             }
@@ -274,7 +276,7 @@ namespace stade.dao {
         }
 
         private bool isNumber(string type) {
-            string[] tabNumber = new string[] {"Int32", "Double", "Float"};
+            string[] tabNumber = new string[] {"Int32", "Double", "Float", "Single"};
             for (int i = 0; i < tabNumber.Length;i++ ) {
                 if(tabNumber[i].CompareTo(type) == 0) {
                     return true;

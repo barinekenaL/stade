@@ -12,6 +12,28 @@ using System.Windows.Forms;
 
 namespace stade.services {
     class StadeService {
+
+        public static Zone[] getZones(string idStade) {
+            CRUD crud = new CRUD();
+            DbConnection connection = DbConnect.Connect();
+            object[] tempZone = crud.select("zone", new Zone(), null, "stade = '"+idStade+"'", connection);
+            object[] tempChaise = null;
+            Zone[] zones = new Zone[tempZone.Length];
+            int numChaise = 0;
+            Chaise chaise = null;
+            for (int i = 0; i < tempZone.Length; i++) {
+                zones[i] = (Zone)tempZone[i];
+                tempChaise = crud.select("chaise", new Chaise(), null, "zone = '"+zones[i].Id+"' order by num asc");
+                numChaise = zones[i].Num1 - 1;
+                for (int j = 0; j < tempChaise.Length; j++) {
+                    chaise = (Chaise)tempChaise[j];
+                    numChaise += chaise.Dp;
+                    chaise.numZone = numChaise; 
+                    zones[i].chaises.Add(chaise);
+                }
+            }
+            return zones;
+        }
         public static bool insertZone(
             string stade, string des, ListBox points, string direction, string sens, string categ,
             int num1, float lngCh, float largCh, float espAv, float espCote
@@ -22,7 +44,6 @@ namespace stade.services {
                 Zone zone = null;
                 CRUD crud = new CRUD();
                 zone = StadeService.simuler(StadeService.GetPoints(points), num1, direction, sens, lngCh, largCh, espAv, espCote);
-                zone.Points = StadeService.GetPointString(points);
                 zone.Stade = stade;
                 zone.Des = des;
                 zone.Categ = categ;
@@ -40,7 +61,7 @@ namespace stade.services {
         }
         public static bool inPolygon(Stade stade, int[] point) {
             GraphicsPath path = new GraphicsPath();
-            path.AddPolygon(StadeService.GetPoints(StadeService.GetPoints(stade.Points)));
+            path.AddPolygon(StadeService.GetPoints(stade.Points));
             Region region = new Region(path);
             return region.IsVisible(point[0], point[1]);
         }
@@ -59,7 +80,21 @@ namespace stade.services {
             return points;
         }
 
-        public static ListBox GetPoints(string data) {
+        public static PointF[] GetPoints(string points) {
+            string[] pts = points.Split('/');
+            PointF[] result = new PointF[pts.Length];
+            float x = 0, y = 0;
+            string[] point = null;
+            for (int i = 0; i < pts.Length; i++) {
+                point = pts[i].Split(';');
+                x = float.Parse(point[0]);
+                y = float.Parse(point[1]);
+                result[i] = new PointF(x, y);
+            }
+            return result;
+        }
+
+        public static ListBox GetListBox(string data) {
             string[] pts = data.Split('/');
             ListBox result = new ListBox();
             for (int i = 0; i < pts.Length; i++) {
@@ -72,6 +107,15 @@ namespace stade.services {
             for (int i = 0; i < data.Items.Count; i++) {
                 result += data.Items[i].ToString().Trim();
                 result += i == data.Items.Count - 1 ? "" : "/";
+            }
+            return result;
+        }
+
+        public static string GetPointString(PointF[] data) {
+            string result = "";
+            for (int i = 0; i < data.Length; i++) {
+                result += data[i].X+";"+ data[i].Y;
+                result += i == data.Length - 1 ? "" : "/";
             }
             return result;
         }
@@ -93,7 +137,7 @@ namespace stade.services {
             RectangleF b = new RectangleF(minX, minY, maxX, maxY);
             path.AddPolygon(points);
             Region region = new Region(path);
-            Zone zone = new Zone("", "", "", num1, dir, sens, lngCh, largCh, espAv, espCote);
+            Zone zone = new Zone("", "", StadeService.GetPointString(points), num1, dir, sens, lngCh, largCh, espAv, espCote);
             typeof(StadeService).GetMethod(dir + "_" + sens).Invoke(null, new object[] { 
                 region, b, zone, num1, lngCh, largCh, espAv, espCote
             });
