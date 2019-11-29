@@ -17,11 +17,14 @@ namespace stade.models {
         private float largCh;
         private float espAv;
         private float espCote;
-        private List<Chaise> chaises = new List<Chaise>();
+        private string categ;
+        public List<Chaise> chaises = new List<Chaise>();
 
         public void AddChaise(Chaise ch) {
             chaises.Add(ch);
         }
+
+        public Zone() { }
         public Zone(string stade, string des, string points, int num1, string dir, string sens, float lngCh, float largCh, float espAv, float espCote) {
             this.stade = stade;
             this.des = des;
@@ -46,6 +49,6 @@ namespace stade.models {
         public float LargCh { get => largCh; set => largCh = value; }
         public float EspAv { get => espAv; set => espAv = value; }
         public float EspCote { get => espCote; set => espCote = value; }
-        public Chaise[] Chaises { get => chaises.ToArray(); set => chaises = value.OfType<Chaise>().ToList(); }
+        public string Categ { get => categ; set => categ = value; }
     }
 }

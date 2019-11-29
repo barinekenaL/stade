@@ -57,6 +57,7 @@
             this.desZone = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
+            this.err = new System.Windows.Forms.Label();
             this.insertion.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.espCote)).BeginInit();
@@ -68,6 +69,7 @@
             // 
             // insertion
             // 
+            this.insertion.Controls.Add(this.err);
             this.insertion.Controls.Add(this.couleur);
             this.insertion.Controls.Add(this.label11);
             this.insertion.Controls.Add(this.categ);
@@ -379,7 +381,17 @@
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(873, 571);
             this.panel.TabIndex = 1;
+            this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
             this.panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_MouseClick);
+            // 
+            // err
+            // 
+            this.err.AutoSize = true;
+            this.err.ForeColor = System.Drawing.Color.Red;
+            this.err.Location = new System.Drawing.Point(9, 344);
+            this.err.Name = "err";
+            this.err.Size = new System.Drawing.Size(0, 17);
+            this.err.TabIndex = 26;
             // 
             // ZoneView
             // 
@@ -436,5 +448,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox categ;
         private System.Windows.Forms.Button couleur;
+        private System.Windows.Forms.Label err;
     }
 }

@@ -16,7 +16,7 @@ namespace stade
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ZoneView());
+            Application.Run(new StadeView());
         }
     }
 }

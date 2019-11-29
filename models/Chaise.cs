@@ -10,11 +10,15 @@ namespace stade.models {
         private float x;
         private float y;
         private string zone;
+        private int etat = 1;
         private int num;
+        private int dp = 1;
+        public int numZone;
 
-        public Chaise(float x, float y, int num) {
+        public Chaise(float x, float y, int numZone, int num) {
             this.x = x;
             this.y = y;
+            this.numZone = numZone;
             this.num = num;
         }
 
@@ -23,5 +27,7 @@ namespace stade.models {
         public float Y { get => y; set => y = value; }
         public int Num { get => num; set => num = value; }
         public string Zone { get => zone; set => zone = value; }
+        public int Dp { get => dp; set => dp = value; }
+        public int Etat { get => etat; set => etat = value; }
     }
 }

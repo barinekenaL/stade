@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.insertion = new System.Windows.Forms.GroupBox();
+            this.couleur = new System.Windows.Forms.Button();
+            this.clear = new System.Windows.Forms.Button();
+            this.points = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ajouter = new System.Windows.Forms.Button();
             this.desStade = new System.Windows.Forms.TextBox();
@@ -36,10 +40,7 @@
             this.stades = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.points = new System.Windows.Forms.ListBox();
-            this.clear = new System.Windows.Forms.Button();
-            this.couleur = new System.Windows.Forms.Button();
+            this.err = new System.Windows.Forms.Label();
             this.insertion.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +60,46 @@
             this.insertion.TabIndex = 1;
             this.insertion.TabStop = false;
             this.insertion.Text = "Insertion";
+            // 
+            // couleur
+            // 
+            this.couleur.Location = new System.Drawing.Point(6, 214);
+            this.couleur.Name = "couleur";
+            this.couleur.Size = new System.Drawing.Size(75, 23);
+            this.couleur.TabIndex = 11;
+            this.couleur.Text = "couleur";
+            this.couleur.UseVisualStyleBackColor = true;
+            this.couleur.Click += new System.EventHandler(this.couleur_Click);
+            // 
+            // clear
+            // 
+            this.clear.Location = new System.Drawing.Point(6, 185);
+            this.clear.Name = "clear";
+            this.clear.Size = new System.Drawing.Size(75, 23);
+            this.clear.TabIndex = 10;
+            this.clear.Text = "clear";
+            this.clear.UseVisualStyleBackColor = true;
+            this.clear.Click += new System.EventHandler(this.clear_Click);
+            // 
+            // points
+            // 
+            this.points.FormattingEnabled = true;
+            this.points.ItemHeight = 16;
+            this.points.Location = new System.Drawing.Point(101, 60);
+            this.points.Name = "points";
+            this.points.Size = new System.Drawing.Size(120, 148);
+            this.points.TabIndex = 9;
+            this.points.MouseClick += new System.Windows.Forms.MouseEventHandler(this.points_MouseClick);
+            this.points.KeyUp += new System.Windows.Forms.KeyEventHandler(this.points_KeyUp);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 17);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Points";
             // 
             // label1
             // 
@@ -94,6 +135,7 @@
             this.choisir.TabIndex = 3;
             this.choisir.Text = "Choisir";
             this.choisir.UseVisualStyleBackColor = true;
+            this.choisir.Click += new System.EventHandler(this.choisir_Click);
             // 
             // stades
             // 
@@ -123,55 +165,25 @@
             this.panel.TabIndex = 3;
             this.panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_MouseClick);
             // 
-            // label3
+            // err
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 60);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 17);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Points";
+            this.err.AutoSize = true;
+            this.err.ForeColor = System.Drawing.Color.Red;
+            this.err.Location = new System.Drawing.Point(12, 277);
+            this.err.Name = "err";
+            this.err.Size = new System.Drawing.Size(0, 17);
+            this.err.TabIndex = 4;
             // 
-            // points
-            // 
-            this.points.FormattingEnabled = true;
-            this.points.ItemHeight = 16;
-            this.points.Location = new System.Drawing.Point(101, 60);
-            this.points.Name = "points";
-            this.points.Size = new System.Drawing.Size(120, 148);
-            this.points.TabIndex = 9;
-            this.points.MouseClick += new System.Windows.Forms.MouseEventHandler(this.points_MouseClick);
-            this.points.KeyUp += new System.Windows.Forms.KeyEventHandler(this.points_KeyUp);
-            // 
-            // clear
-            // 
-            this.clear.Location = new System.Drawing.Point(6, 185);
-            this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(75, 23);
-            this.clear.TabIndex = 10;
-            this.clear.Text = "clear";
-            this.clear.UseVisualStyleBackColor = true;
-            this.clear.Click += new System.EventHandler(this.clear_Click);
-            // 
-            // couleur
-            // 
-            this.couleur.Location = new System.Drawing.Point(6, 214);
-            this.couleur.Name = "couleur";
-            this.couleur.Size = new System.Drawing.Size(75, 23);
-            this.couleur.TabIndex = 11;
-            this.couleur.Text = "couleur";
-            this.couleur.UseVisualStyleBackColor = true;
-            this.couleur.Click += new System.EventHandler(this.couleur_Click);
-            // 
-            // Stade
+            // StadeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1103, 595);
+            this.Controls.Add(this.err);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.insertion);
-            this.Name = "Stade";
+            this.Name = "StadeView";
             this.Text = "Espace";
             this.Load += new System.EventHandler(this.Stade_Load);
             this.Resize += new System.EventHandler(this.Stade_Resize);
@@ -179,6 +191,7 @@
             this.insertion.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -196,6 +209,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button clear;
         private System.Windows.Forms.Button couleur;
+        private System.Windows.Forms.Label err;
     }
 }
 

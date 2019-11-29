@@ -10,6 +10,7 @@ namespace stade.models {
         string des;
         string points;
 
+        public Stade() { }
         public Stade(string des, string points) {
             this.des = des;
             this.points = points;
