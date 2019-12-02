@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.insertion = new System.Windows.Forms.GroupBox();
+            this.err = new System.Windows.Forms.Label();
             this.couleur = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.categ = new System.Windows.Forms.ComboBox();
@@ -57,7 +58,6 @@
             this.desZone = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
-            this.err = new System.Windows.Forms.Label();
             this.insertion.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.espCote)).BeginInit();
@@ -95,6 +95,15 @@
             this.insertion.TabIndex = 0;
             this.insertion.TabStop = false;
             this.insertion.Text = "zone";
+            // 
+            // err
+            // 
+            this.err.AutoSize = true;
+            this.err.ForeColor = System.Drawing.Color.Red;
+            this.err.Location = new System.Drawing.Point(9, 344);
+            this.err.Name = "err";
+            this.err.Size = new System.Drawing.Size(0, 17);
+            this.err.TabIndex = 26;
             // 
             // couleur
             // 
@@ -143,9 +152,9 @@
             this.groupBox2.Controls.Add(this.largCh);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.espAv);
-            this.groupBox2.Location = new System.Drawing.Point(1, 389);
+            this.groupBox2.Location = new System.Drawing.Point(6, 389);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(193, 138);
+            this.groupBox2.Size = new System.Drawing.Size(188, 138);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chaise";
@@ -383,15 +392,6 @@
             this.panel.TabIndex = 1;
             this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
             this.panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_MouseClick);
-            // 
-            // err
-            // 
-            this.err.AutoSize = true;
-            this.err.ForeColor = System.Drawing.Color.Red;
-            this.err.Location = new System.Drawing.Point(9, 344);
-            this.err.Name = "err";
-            this.err.Size = new System.Drawing.Size(0, 17);
-            this.err.TabIndex = 26;
             // 
             // ZoneView
             // 

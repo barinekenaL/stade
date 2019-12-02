@@ -61,7 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dao\CRUD.cs" />
+    <Compile Include="dao\Crud.cs" />
     <Compile Include="dao\DbConnect.cs" />
     <Compile Include="models\Categ.cs" />
     <Compile Include="models\Chaise.cs" />
