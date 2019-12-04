@@ -63,12 +63,38 @@
   <ItemGroup>
     <Compile Include="dao\Crud.cs" />
     <Compile Include="dao\DbConnect.cs" />
+    <Compile Include="dbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="models\Categ.cs" />
     <Compile Include="models\Chaise.cs" />
+    <Compile Include="models\Evenement.cs" />
     <Compile Include="models\Stade.cs" />
     <Compile Include="models\Zone.cs" />
     <Compile Include="services\DrawService.cs" />
+    <Compile Include="services\InsertService.cs" />
     <Compile Include="services\StadeService.cs" />
+    <Compile Include="services\Tools.cs" />
+    <Compile Include="views\DashBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\DashBoard.Designer.cs">
+      <DependentUpon>DashBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\Insertion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\Insertion.Designer.cs">
+      <DependentUpon>Insertion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\ReservationView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\ReservationView.Designer.cs">
+      <DependentUpon>ReservationView.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\ZoneView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +109,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="views\DashBoard.resx">
+      <DependentUpon>DashBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\Insertion.resx">
+      <DependentUpon>Insertion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\ReservationView.resx">
+      <DependentUpon>ReservationView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\StadeView.resx">
       <DependentUpon>StadeView.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,6 +133,17 @@
     <EmbeddedResource Include="views\ZoneView.resx">
       <DependentUpon>ZoneView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="dbDataSet.xsc">
+      <DependentUpon>dbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="dbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dbDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dbDataSet.xss">
+      <DependentUpon>dbDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

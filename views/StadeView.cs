@@ -1,9 +1,11 @@
 ﻿using stade.dao;
 using stade.models;
 using stade.services;
+using stade.views;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace stade {
@@ -41,7 +43,7 @@ namespace stade {
 				st = (Stade)temp[i];
 				this.stds.Add(st.Id, st.Des);
 			}
-			DrawService.setComboboxSource(this.stades, this.stds, 0);
+			DrawService.SetComboboxSource(this.stades, this.stds, 0);
 		}
 
 		private void choisir_Click(object sender, EventArgs e) {
@@ -76,10 +78,9 @@ namespace stade {
 		}
 
 		private void Stade_Load(object sender, EventArgs e) {
-			this.stades.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.Stade_Resize(sender, e);
 			if (this.stds.Count > 0) {
-				DrawService.setComboboxSource(this.stades, this.stds, 0);
+				DrawService.SetComboboxSource(this.stades, this.stds, 0);
 			}
 		}
 
@@ -90,6 +91,23 @@ namespace stade {
 			this.panel.Size = new Size(w, h);
 			this.panel.Refresh();
 			DrawService.DrawPolygon(this.panel, this.points, this.pen);
+		}
+
+		private void insert_Click(object sender, EventArgs e) {
+			Insertion insertion = new Insertion();
+			insertion.Show();
+		}
+
+		private void reservation_Click(object sender, EventArgs e) {
+			ReservationView reservation = new ReservationView();
+			reservation.Show();
+		}
+
+		[DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+
+		private void button1_Click(object sender, EventArgs e) {
+			mouse_event(0x02 | 0x04, 505, 392, 0, 0);
 		}
 	}
 }

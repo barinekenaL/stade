@@ -16,7 +16,7 @@ namespace stade.services {
 			g.FillRectangle(pen.Brush, chaise.X, chaise.Y, zone.LngCh, zone.LargCh);
 		}
 
-		public static void setComboboxSource<K, V>(ComboBox c, Dictionary<K, V> source, int selected) {
+		public static void SetComboboxSource<K, V>(ComboBox c, Dictionary<K, V> source, int selected) {
 			c.DataSource = new BindingSource(source, null);
 			c.DisplayMember = "Value";
 			c.ValueMember = "key";

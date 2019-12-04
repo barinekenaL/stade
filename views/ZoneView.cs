@@ -176,25 +176,21 @@ namespace stade {
 		}
 
 		private void Zone_Load(object sender, EventArgs e) {
-			this.stade.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.direction.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.sens.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.categ.DropDownStyle = ComboBoxStyle.DropDownList;
 			if (this.dir.Count > 0) {
-				DrawService.setComboboxSource(this.direction, this.dir, 0);
+				DrawService.SetComboboxSource(this.direction, this.dir, 0);
 			}
 
 			if (this.sens2.Count > 0) {
-				DrawService.setComboboxSource(this.sens, this.sens2, 0);
+				DrawService.SetComboboxSource(this.sens, this.sens2, 0);
 				this.sens.DataSource = new BindingSource(this.sens2, null);
 			}
 
 			if (this.categories.Count > 0) {
-				DrawService.setComboboxSource(this.categ, this.categories, 0);
+				DrawService.SetComboboxSource(this.categ, this.categories, 0);
 			}
 
 			if (this.stades.Count > 0) {
-				DrawService.setComboboxSource(this.stade, this.stades, this.stades.Keys.ToList<string>().IndexOf(this.stadeData.Id));
+				DrawService.SetComboboxSource(this.stade, this.stades, this.stades.Keys.ToList<string>().IndexOf(this.stadeData.Id));
 			}
 
 			this.Zone_Resize(sender, e);
