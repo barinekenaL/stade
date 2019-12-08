@@ -8,15 +8,6 @@ using System.Threading.Tasks;
 namespace stade.models {
 
 	internal class Evenement {
-		private string id;
-		private string des;
-		private DateTime date;
-		private string stade;
-
-		public string Id { get => id; set => id = value; }
-		public string Des { get => des; set => des = value; }
-		public DateTime Date { get => date; set => date = value; }
-		public string Stade { get => stade; set => stade = value; }
 
 		public Evenement() {
 		}
@@ -26,5 +17,11 @@ namespace stade.models {
 			this.Date = Tools.GetDate(date);
 			this.Stade = stade;
 		}
+
+		public DateTime Date { get; set; }
+		public string Des { get; set; }
+		public string Id { get; set; }
+		public string Stade { get; set; }
+		internal Zone[] Zones { get; set; }
 	}
 }

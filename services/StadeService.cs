@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace stade.services {
@@ -16,14 +17,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			x = bounds.Right - espCote;
-			int num = 1;
 			while (x - largCh >= bounds.X) {
 				y = bounds.Bottom - espAv;
 				while (y - lngCh >= bounds.Y) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					y -= dy;
 				}
@@ -35,14 +35,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			x = bounds.X + espCote;
-			int num = 1;
 			while (x + largCh <= bounds.Right) {
 				y = bounds.Bottom - espAv;
 				while (y - lngCh >= bounds.Y) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					y -= dy;
 				}
@@ -54,14 +53,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			y = bounds.Bottom - espAv;
-			int num = 1;
 			while (y - lngCh >= bounds.Top) {
 				x = bounds.Right - espCote;
 				while (x - largCh >= bounds.X) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					x -= dx;
 				}
@@ -73,14 +71,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			y = bounds.Y + espAv;
-			int num = 1;
 			while (y + lngCh <= bounds.Bottom) {
 				x = bounds.Right - espCote;
 				while (x - largCh >= bounds.X) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					x -= dx;
 				}
@@ -92,14 +89,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			y = bounds.Bottom - espAv;
-			int num = 1;
 			while (y - lngCh >= bounds.Top) {
 				x = bounds.X + espCote;
 				while (x + largCh <= bounds.Right) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					x += dx;
 				}
@@ -111,14 +107,13 @@ namespace stade.services {
 			float x = 0;
 			float y = 0;
 			y = bounds.Y + espAv;
-			int num = 1;
 			while (y + lngCh <= bounds.Bottom) {
 				x = bounds.X + espCote;
 				while (x + largCh <= bounds.Right) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					x += lngCh + espCote;
 				}
@@ -127,18 +122,62 @@ namespace stade.services {
 		}
 
 		public static Chaise GetChaise(Zone zone, int[] point) {
-			Chaise[] chaises = zone.chaises.ToArray();
+			Chaise[] chaises = zone.Chaises.ToArray();
 			PointF[] points = new PointF[4];
 			for (int i = 0; i < chaises.Length; i++) {
 				points[0] = new PointF(chaises[i].X, chaises[i].Y);
 				points[1] = new PointF(chaises[i].X + zone.LngCh, chaises[i].Y);
 				points[2] = new PointF(chaises[i].X + zone.LngCh, chaises[i].Y + zone.LargCh);
 				points[3] = new PointF(chaises[i].X, chaises[i].Y + zone.LargCh);
-				if (StadeService.inPolygon(points, point)) {
-					return zone.chaises[i];
+				if (StadeService.InPolygon(points, point)) {
+					return zone.Chaises[i];
 				}
 			}
 			return null;
+		}
+
+		public static Dictionary<string, Evenement> GetEvnmts(string idStade) {
+			DbConnection connection = null;
+			try {
+				connection = DbConnect.Connect();
+				Dictionary<string, Evenement> result = new Dictionary<string, Evenement>();
+				result = Crud.SelectFrom("evenement", new Evenement(), null, "where stade = '" + idStade + "' order by date asc", connection).ToDictionary(item => item.Id);
+				foreach (KeyValuePair<string, Evenement> item in result) {
+					item.Value.Zones = Crud.Select("zone", new Zone(), null, "evenm = '" + item.Key + "'", connection);
+					for (int i = 0; i < item.Value.Zones.Length; i++) {
+						item.Value.Zones[i].Chaises = Crud.Select("chaise", new Chaise(), null, "zone = '" + item.Value.Zones[i].Id + "'", connection).ToList();
+					}
+				}
+				return result;
+			} catch (Exception) {
+				throw;
+			} finally {
+				if (connection != null) {
+					connection.Close();
+				}
+			}
+		}
+
+		public static Stade GetStade(string idStade) {
+			DbConnection connection = null;
+			try {
+				connection = DbConnect.Connect();
+				Stade stade = Crud.Select("stade", new Stade(), null, "id = '" + idStade + "'", connection)[0];
+				stade.Evenmts = Crud.SelectFrom("evenement", new Evenement(), null, "where stade = '" + idStade + "' order by date asc", connection).ToDictionary(item => item.Id);
+				foreach (KeyValuePair<string, Evenement> item in stade.Evenmts) {
+					item.Value.Zones = Crud.Select("zone", new Zone(), null, "evenm = '" + item.Key + "'", connection);
+					for (int i = 0; i < item.Value.Zones.Length; i++) {
+						item.Value.Zones[i].Chaises = Crud.Select("chaise", new Chaise(), null, "zone = '" + item.Value.Zones[i].Id + "'", connection).ToList();
+					}
+				}
+				return stade;
+			} catch (Exception) {
+				throw;
+			} finally {
+				if (connection != null) {
+					connection.Close();
+				}
+			}
 		}
 
 		public static ListBox GetListBox(string data) {
@@ -198,31 +237,18 @@ namespace stade.services {
 
 		public static Zone GetZone(Zone[] zones, int[] point) {
 			for (int i = 0; i < zones.Length; i++) {
-				if (StadeService.inPolygon(zones[i].Points, point)) {
+				if (StadeService.InPolygon(zones[i].Points, point)) {
 					return zones[i];
 				}
 			}
 			return null;
 		}
 
-		public static Zone[] getZones(string idStade) {
+		public static Zone[] GetZones(string idEvnm) {
 			DbConnection connection = DbConnect.Connect();
-			Zone[] zones = Crud.Select("zone", new Zone(), null, "stade = '" + idStade + "'", connection);
-			int numChaise = 0;
-			Chaise[] chaises = null;
+			Zone[] zones = Crud.Select("zone", new Zone(), null, "evenm = '" + idEvnm + "'", connection);
 			for (int i = 0; i < zones.Length; i++) {
-				zones[i] = (Zone)zones[i];
-				chaises = Crud.Select("chaise", new Chaise(), null, "zone = '" + zones[i].Id + "' order by num asc");
-				numChaise = zones[i].Num1 - 1;
-				for (int j = 0; j < chaises.Length; j++) {
-					if (chaises[j].Etat != 0) {
-						numChaise += chaises[j].Dp;
-						chaises[j].numZone = numChaise;
-					} else {
-						chaises[j].numZone = -1;
-					}
-					zones[i].chaises.Add(chaises[j]);
-				}
+				zones[i].Chaises = Crud.Select("chaise", new Chaise(), null, "zone = '" + zones[i].Id + "' order by num asc").ToList();
 			}
 			return zones;
 		}
@@ -231,14 +257,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			x = bounds.Right - espCote;
-			int num = 1;
 			while (x - largCh >= bounds.X) {
 				y = bounds.Y + espAv;
 				while (y + lngCh <= bounds.Bottom) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					y += dy;
 				}
@@ -250,14 +275,13 @@ namespace stade.services {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;
 			x = bounds.X + espCote;
-			int num = 1;
 			while (x + largCh <= bounds.Right) {
 				y = bounds.Y + espAv;
 				while (y + lngCh <= bounds.Bottom) {
 					if (region.IsVisible(x, y) && region.IsVisible(x, y + largCh) &&
 						region.IsVisible(x + lngCh, y) && region.IsVisible(x + lngCh, y + largCh)
 					) {
-						zone.AddChaise(new Chaise(x, y, num1++, num++));
+						zone.AddChaise(new Chaise(x, y, num1++));
 					}
 					y += dy;
 				}
@@ -265,21 +289,21 @@ namespace stade.services {
 			}
 		}
 
-		public static bool inPolygon(string pointString, int[] point) {
+		public static bool InPolygon(string pointString, int[] point) {
 			GraphicsPath path = new GraphicsPath();
 			path.AddPolygon(StadeService.GetPoints(pointString));
 			Region region = new Region(path);
 			return region.IsVisible(point[0], point[1]);
 		}
 
-		public static bool inPolygon(PointF[] points, int[] point) {
+		public static bool InPolygon(PointF[] points, int[] point) {
 			GraphicsPath path = new GraphicsPath();
 			path.AddPolygon(points);
 			Region region = new Region(path);
 			return region.IsVisible(point[0], point[1]);
 		}
 
-		public static int insertStade(string des, string points) {
+		public static int InsertStade(string des, string points) {
 			try {
 				Stade stade = new Stade(des, points);
 				return Crud.Insert("stade", stade);
@@ -288,19 +312,17 @@ namespace stade.services {
 			}
 		}
 
-		public static bool insertZone(string stade, string des, ListBox points, string direction, string sens, string categ, int num1, float lngCh, float largCh, float espAv, float espCote) {
+		public static bool InsertZone(string evenm, string des, ListBox points, string direction, string sens, int num1, float lngCh, float largCh, float espAv, float espCote, float estimation, float pu) {
 			DbConnection connection = null;
 			try {
 				connection = DbConnect.Connect();
 				Zone zone = null;
-				zone = StadeService.simuler(StadeService.GetPoints(points), num1, direction, sens, lngCh, largCh, espAv, espCote);
-				zone.Stade = stade;
-				zone.Des = des;
-				zone.Categ = categ;
+				zone = StadeService.Simuler(StadeService.GetPoints(points), num1, direction, sens, lngCh, largCh, espAv, espCote, estimation, pu);
+				zone.SetData(evenm, des, estimation, pu);
 				Crud.Insert("zone", zone, connection);
 				string idZone = Crud.CurrentId("zone");
-				zone.chaises.Select(c => { c.Zone = idZone; return c; }).ToList();
-				Crud.Insert("chaise", zone.chaises.ToArray(), connection);
+				zone.Chaises.Select(c => { c.Zone = idZone; return c; }).ToList();
+				Crud.Insert("chaise", zone.Chaises.ToArray(), connection);
 				return true;
 			} catch (Exception) {
 				throw;
@@ -310,7 +332,14 @@ namespace stade.services {
 			}
 		}
 
-		public static Zone simuler(PointF[] points, int num1, string dir, string sens, float lngCh, float largCh, float espAv, float espCote) {
+		public static void SetCBSource<K, V>(ComboBox c, Dictionary<K, V> source, int selected) {
+			c.DataSource = new BindingSource(source, null);
+			c.DisplayMember = "Value";
+			c.ValueMember = "key";
+			c.SelectedIndex = selected;
+		}
+
+		public static Zone Simuler(PointF[] points, int num1, string dir, string sens, float lngCh, float largCh, float espAv, float espCote, float prix, float estimation) {
 			List<PointF> pts = points.OfType<PointF>().ToList();
 			float minX = pts.Min<PointF>(point => point.X);
 			float minY = pts.Min<PointF>(point => point.Y);
@@ -320,7 +349,7 @@ namespace stade.services {
 			RectangleF b = new RectangleF(minX, minY, maxX, maxY);
 			path.AddPolygon(points);
 			Region region = new Region(path);
-			Zone zone = new Zone("", "", StadeService.GetPointString(points), num1, dir, sens, lngCh, largCh, espAv, espCote);
+			Zone zone = new Zone("", "", StadeService.GetPointString(points), num1, dir, sens, lngCh, largCh, espAv, espCote, prix, estimation);
 			typeof(StadeService).GetMethod(dir + "_" + sens).Invoke(null, new object[] {
 				region, b, zone, num1, lngCh, largCh, espAv, espCote
 			});

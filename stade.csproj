@@ -63,6 +63,9 @@
   <ItemGroup>
     <Compile Include="dao\Crud.cs" />
     <Compile Include="dao\DbConnect.cs" />
+    <Compile Include="dbDataSet.cs">
+      <DependentUpon>dbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -71,6 +74,7 @@
     <Compile Include="models\Categ.cs" />
     <Compile Include="models\Chaise.cs" />
     <Compile Include="models\Evenement.cs" />
+    <Compile Include="models\Position.cs" />
     <Compile Include="models\Stade.cs" />
     <Compile Include="models\Zone.cs" />
     <Compile Include="services\DrawService.cs" />
@@ -83,11 +87,11 @@
     <Compile Include="views\DashBoard.Designer.cs">
       <DependentUpon>DashBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="views\Insertion.cs">
+    <Compile Include="views\InsertView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="views\Insertion.Designer.cs">
-      <DependentUpon>Insertion.cs</DependentUpon>
+    <Compile Include="views\InsertView.Designer.cs">
+      <DependentUpon>InsertView.cs</DependentUpon>
     </Compile>
     <Compile Include="views\ReservationView.cs">
       <SubType>Form</SubType>
@@ -112,8 +116,8 @@
     <EmbeddedResource Include="views\DashBoard.resx">
       <DependentUpon>DashBoard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="views\Insertion.resx">
-      <DependentUpon>Insertion.cs</DependentUpon>
+    <EmbeddedResource Include="views\InsertView.resx">
+      <DependentUpon>InsertView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\ReservationView.resx">
       <DependentUpon>ReservationView.cs</DependentUpon>

@@ -7,51 +7,57 @@ using System.Threading.Tasks;
 namespace stade.models {
 
 	internal class Zone {
-		private string id;
-		private string stade;
-		private string des;
-		private string points;
-		private int num1;
-		private string dir;
-		private string sens;
-		private float lngCh;
-		private float largCh;
-		private float espAv;
-		private float espCote;
-		private string categ;
-		public List<Chaise> chaises = new List<Chaise>();
+
+		public float GetPrixEstimer() {
+			return this.Pu * this.GetPlaceEstimer();
+		}
+
+		public float GetPlaceEstimer() {
+			return Convert.ToSingle(Math.Floor(this.Chaises.Count * Estimation / 100));
+		}
+
+		public void SetData(string evenm, string des, float estimation, float pu) {
+			this.Evenm = evenm;
+			this.Des = des;
+			this.Estimation = estimation;
+			this.Pu = pu;
+		}
 
 		public void AddChaise(Chaise ch) {
-			chaises.Add(ch);
+			this.Chaises.Add(ch);
 		}
 
 		public Zone() {
 		}
 
-		public Zone(string stade, string des, string points, int num1, string dir, string sens, float lngCh, float largCh, float espAv, float espCote) {
-			this.stade = stade;
-			this.des = des;
-			this.points = points;
-			this.num1 = num1;
-			this.dir = dir;
-			this.sens = sens;
-			this.lngCh = lngCh;
-			this.largCh = largCh;
-			this.espAv = espAv;
-			this.espCote = espCote;
+		public Zone(string evenm, string des, string points, int num1, string dir, string sens, float lngCh, float largCh, float espAv, float espCote, float pu, float estimation) {
+			this.Evenm = evenm;
+			this.Des = des;
+			this.Points = points;
+			this.Num1 = num1;
+			this.Dir = dir;
+			this.Sens = sens;
+			this.LngCh = lngCh;
+			this.LargCh = largCh;
+			this.EspAv = espAv;
+			this.EspCote = espCote;
+			this.Pu = pu;
+			this.Estimation = estimation;
 		}
 
-		public string Id { get => id; set => id = value; }
-		public string Stade { get => stade; set => stade = value; }
-		public string Des { get => des; set => des = value; }
-		public string Points { get => points; set => points = value; }
-		public int Num1 { get => num1; set => num1 = value; }
-		public string Dir { get => dir; set => dir = value; }
-		public string Sens { get => sens; set => sens = value; }
-		public float LngCh { get => lngCh; set => lngCh = value; }
-		public float LargCh { get => largCh; set => largCh = value; }
-		public float EspAv { get => espAv; set => espAv = value; }
-		public float EspCote { get => espCote; set => espCote = value; }
-		public string Categ { get => categ; set => categ = value; }
+		public string Id { get; set; }
+		public string Des { get; set; }
+		public string Points { get; set; }
+		public int Num1 { get; set; }
+		public string Dir { get; set; }
+		public string Sens { get; set; }
+		public float LngCh { get; set; }
+		public float LargCh { get; set; }
+		public float EspAv { get; set; }
+		public float EspCote { get; set; }
+		public string Evenm { get; set; }
+		public float Estimation { get; set; }
+		internal List<Chaise> Chaises { get; set; } = new List<Chaise>();
+		public float Pu { get; set; }
 	}
 }

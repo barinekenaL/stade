@@ -5,19 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace stade.models {
-    class Stade {
-        string id;
-        string des;
-        string points;
 
-        public Stade() { }
-        public Stade(string des, string points) {
-            this.des = des;
-            this.points = points;
-        }
+	internal class Stade {
 
-        public string Id { get => id; set => id = value; }
-        public string Des { get => des; set => des = value; }
-        public string Points { get => points; set => points = value; }
-    }
+		public Stade() {
+		}
+
+		public Stade(string des, string points) {
+			this.Des = des;
+			this.Points = points;
+		}
+
+		public string Id { get; set; }
+		public string Des { get; set; }
+		public string Points { get; set; }
+		internal Dictionary<string, Evenement> Evenmts { get; set; }
+	}
 }

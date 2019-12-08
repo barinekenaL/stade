@@ -5,23 +5,16 @@ using stade.views;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace stade {
 
 	public partial class StadeView : Form {
 		private Pen pen = new Pen(Color.DarkBlue);
-		private Dictionary<string, string> stds = new Dictionary<string, string>();
 
 		public StadeView() {
 			InitializeComponent();
-			object[] temp = Crud.Select("stade", new Stade(), null, null);
-			Stade st = null;
-			for (int i = 0; i < temp.Length; i++) {
-				st = (Stade)temp[i];
-				this.stds.Add(st.Id, st.Des);
-			}
 		}
 
 		private void ajouter_Click(object sender, EventArgs e) {
@@ -33,22 +26,11 @@ namespace stade {
 				this.err.Text = "Designation requis";
 				return;
 			}
-			StadeService.insertStade(this.desStade.Text, StadeService.GetPointString(this.points));
-			ZoneView zone = new ZoneView(Crud.CurrentId("stade"));
-			zone.Show();
-			object[] temp = Crud.Select("stade", new Stade(), null, null);
-			Stade st = null;
-			this.stds = new Dictionary<string, string>();
-			for (int i = 0; i < temp.Length; i++) {
-				st = (Stade)temp[i];
-				this.stds.Add(st.Id, st.Des);
-			}
-			DrawService.SetComboboxSource(this.stades, this.stds, 0);
+			StadeService.InsertStade(this.desStade.Text, StadeService.GetPointString(this.points));
+			MessageBox.Show("Stade inserée avec succès!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void choisir_Click(object sender, EventArgs e) {
-			ZoneView zone = new ZoneView(((KeyValuePair<string, string>)this.stades.SelectedItem).Key);
-			zone.Show();
 		}
 
 		private void clear_Click(object sender, EventArgs e) {
@@ -79,9 +61,6 @@ namespace stade {
 
 		private void Stade_Load(object sender, EventArgs e) {
 			this.Stade_Resize(sender, e);
-			if (this.stds.Count > 0) {
-				DrawService.SetComboboxSource(this.stades, this.stds, 0);
-			}
 		}
 
 		private void Stade_Resize(object sender, EventArgs e) {
@@ -94,20 +73,13 @@ namespace stade {
 		}
 
 		private void insert_Click(object sender, EventArgs e) {
-			Insertion insertion = new Insertion();
+			InsertView insertion = new InsertView();
 			insertion.Show();
 		}
 
 		private void reservation_Click(object sender, EventArgs e) {
 			ReservationView reservation = new ReservationView();
 			reservation.Show();
-		}
-
-		[DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-
-		private void button1_Click(object sender, EventArgs e) {
-			mouse_event(0x02 | 0x04, 505, 392, 0, 0);
 		}
 	}
 }

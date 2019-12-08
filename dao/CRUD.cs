@@ -251,9 +251,9 @@ namespace stade.dao {
 				object instance = null;
 				command = connection.CreateCommand();
 				command.CommandText = "SELECT ";
-				command.CommandText += (column == null || column == "" ? "*" : column);
+				command.CommandText += (column == null || column == "") ? "*" : column;
 				command.CommandText += " FROM " + table;
-				command.CommandText += where == null || column == "" ? "" : " where " + where;
+				command.CommandText += (where == null || where == "") ? "" : " where " + where;
 				// execute command
 				reader = command.ExecuteReader();
 				string columnName = "";
@@ -381,6 +381,85 @@ namespace stade.dao {
 			}
 		}
 
+		public static T[] SelectFrom<T>(string tableName, T obj, string column, string where) {
+			DbConnection connection = null;
+			try {
+				connection = DbConnect.Connect();
+				return Crud.SelectFrom(tableName, obj, column, where, connection);
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				if (connection != null)
+					connection.Close();
+			}
+		}
+
+		public static T[] SelectFrom<T>(string table, T obj, string column, string where, DbConnection connection) {
+			DbCommand command = null;
+			DbDataReader reader = null;
+			try {
+				// create and set SQL command
+				PropertyInfo property = null;
+				Type classe = obj.GetType();
+				List<T> result = new List<T>();
+				string propType = null;
+				object instance = null;
+				command = connection.CreateCommand();
+				command.CommandText = "SELECT ";
+				command.CommandText += (column == null || column == "" ? "*" : column);
+				command.CommandText += " FROM " + table;
+				command.CommandText += where == null || column == "" ? "" : " " + where;
+				// execute command
+				reader = command.ExecuteReader();
+				string columnName = "";
+				while (reader.Read()) {
+					instance = Activator.CreateInstance(classe);
+					for (int i = 0; i < reader.FieldCount; i++) {
+						columnName = Crud.UpperFirst(reader.GetName(i).ToString());
+						property = classe.GetProperty(columnName);
+						if (property == null) {
+							continue;
+						}
+						propType = property.PropertyType.Name;
+						try {
+							if (propType.Equals("Int32")) {
+								property.SetValue(instance, reader.GetInt32(i), null);
+							} else if (propType.Equals("Double")) {
+								property.SetValue(instance, (double)reader.GetDecimal(i), null);
+							} else if (propType.Equals("float")) {
+								property.SetValue(instance, reader.GetFloat(i), null);
+							} else if (propType.Equals("DateTime")) {
+								property.SetValue(instance, reader.GetDateTime(i), null);
+							} else if (propType.Equals("String")) {
+								property.SetValue(instance, reader.GetString(i), null);
+							} else if (propType.Equals("Single")) {
+								property.SetValue(instance, Convert.ToSingle(reader.GetDecimal(i)), null);
+							} else {
+								throw new Exception("Type not found in select !!!");
+							}
+						} catch (Exception) {
+							if (Crud.IsNumber(propType)) {
+								property.SetValue(instance, 0, null);
+							} else {
+								property.SetValue(instance, "", null);
+							}
+						}
+					}
+					result.Add((T)instance);
+				}
+				return result.ToArray();
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				if (reader != null) {
+					reader.Dispose();
+					reader.Close();
+				}
+				if (command != null)
+					command.Dispose();
+			}
+		}
+
 		public static int Update(string table, string toUpdate, string condition, DbConnection connection) {
 			DbCommand command = null;
 			try {
@@ -440,6 +519,10 @@ namespace stade.dao {
 				if (connection != null)
 					connection.Close();
 			}
+		}
+
+		public static string UpperFirst(string str) {
+			return str.Substring(0, 1).ToUpper() + str.Substring(1);
 		}
 
 		private static string[] GetColsName(string table, DbConnection connection) {
@@ -523,10 +606,6 @@ namespace stade.dao {
 
 		private static string LowerFirst(string str) {
 			return str.Substring(0, 1).ToLower() + str.Substring(1);
-		}
-
-		private static string UpperFirst(string str) {
-			return str.Substring(0, 1).ToUpper() + str.Substring(1);
 		}
 
 		private void SetParameter<T>(DbCommand command, T obj, string tableName, DbConnection connection) {

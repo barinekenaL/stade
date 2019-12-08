@@ -36,16 +36,11 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.ajouter = new System.Windows.Forms.Button();
 			this.desStade = new System.Windows.Forms.TextBox();
-			this.choisir = new System.Windows.Forms.Button();
-			this.stades = new System.Windows.Forms.ComboBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.panel = new System.Windows.Forms.Panel();
 			this.err = new System.Windows.Forms.Label();
 			this.insert = new System.Windows.Forms.Button();
 			this.reservation = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
 			this.insertion.SuspendLayout();
-			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// insertion
@@ -130,35 +125,6 @@
 			this.desStade.Size = new System.Drawing.Size(120, 22);
 			this.desStade.TabIndex = 0;
 			// 
-			// choisir
-			// 
-			this.choisir.Location = new System.Drawing.Point(17, 73);
-			this.choisir.Name = "choisir";
-			this.choisir.Size = new System.Drawing.Size(148, 23);
-			this.choisir.TabIndex = 3;
-			this.choisir.Text = "Choisir";
-			this.choisir.UseVisualStyleBackColor = true;
-			this.choisir.Click += new System.EventHandler(this.choisir_Click);
-			// 
-			// stades
-			// 
-			this.stades.FormattingEnabled = true;
-			this.stades.Location = new System.Drawing.Point(16, 33);
-			this.stades.Name = "stades";
-			this.stades.Size = new System.Drawing.Size(149, 24);
-			this.stades.TabIndex = 2;
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.stades);
-			this.groupBox2.Controls.Add(this.choisir);
-			this.groupBox2.Location = new System.Drawing.Point(12, 267);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(229, 118);
-			this.groupBox2.TabIndex = 2;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Choix existant";
-			// 
 			// panel
 			// 
 			this.panel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -179,9 +145,9 @@
 			// 
 			// insert
 			// 
-			this.insert.Location = new System.Drawing.Point(12, 391);
+			this.insert.Location = new System.Drawing.Point(12, 267);
 			this.insert.Name = "insert";
-			this.insert.Size = new System.Drawing.Size(146, 23);
+			this.insert.Size = new System.Drawing.Size(98, 23);
 			this.insert.TabIndex = 5;
 			this.insert.Text = "Insertion";
 			this.insert.UseVisualStyleBackColor = true;
@@ -189,43 +155,31 @@
 			// 
 			// reservation
 			// 
-			this.reservation.Location = new System.Drawing.Point(12, 420);
+			this.reservation.Location = new System.Drawing.Point(139, 267);
 			this.reservation.Name = "reservation";
-			this.reservation.Size = new System.Drawing.Size(146, 23);
+			this.reservation.Size = new System.Drawing.Size(103, 23);
 			this.reservation.TabIndex = 6;
 			this.reservation.Text = "Reservation";
 			this.reservation.UseVisualStyleBackColor = true;
 			this.reservation.Click += new System.EventHandler(this.reservation_Click);
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(92, 492);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 7;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// StadeView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1103, 595);
-			this.Controls.Add(this.button1);
 			this.Controls.Add(this.reservation);
 			this.Controls.Add(this.insert);
 			this.Controls.Add(this.err);
 			this.Controls.Add(this.panel);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.insertion);
 			this.Name = "StadeView";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Stade";
 			this.Load += new System.EventHandler(this.Stade_Load);
 			this.Resize += new System.EventHandler(this.Stade_Resize);
 			this.insertion.ResumeLayout(false);
 			this.insertion.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -236,10 +190,7 @@
         private System.Windows.Forms.GroupBox insertion;
         private System.Windows.Forms.TextBox desStade;
         private System.Windows.Forms.Button ajouter;
-        private System.Windows.Forms.Button choisir;
-        private System.Windows.Forms.ComboBox stades;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.ListBox points;
         private System.Windows.Forms.Label label3;
@@ -248,7 +199,6 @@
         private System.Windows.Forms.Label err;
 		private System.Windows.Forms.Button insert;
 		private System.Windows.Forms.Button reservation;
-		private System.Windows.Forms.Button button1;
 	}
 }
 

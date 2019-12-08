@@ -16,13 +16,6 @@ namespace stade.services {
 			g.FillRectangle(pen.Brush, chaise.X, chaise.Y, zone.LngCh, zone.LargCh);
 		}
 
-		public static void SetComboboxSource<K, V>(ComboBox c, Dictionary<K, V> source, int selected) {
-			c.DataSource = new BindingSource(source, null);
-			c.DisplayMember = "Value";
-			c.ValueMember = "key";
-			c.SelectedIndex = selected;
-		}
-
 		public static void ShowZone(Panel panel, Zone[] zones, Pen pen) {
 			for (int i = 0; i < zones.Length; i++) {
 				DrawService.ShowZone(panel, zones[i], pen);
@@ -33,12 +26,12 @@ namespace stade.services {
 			Graphics g = panel.CreateGraphics();
 			RectangleF[] rect = new RectangleF[1];
 			DrawService.DrawPolygon(panel, StadeService.GetListBox(zone.Points), pen);
-			for (int i = 0; i < zone.chaises.Count; i++) {
-				rect[0] = new RectangleF(zone.chaises[i].X, zone.chaises[i].Y, zone.LngCh, zone.LargCh);
-				if (zone.chaises[i].numZone < 0) {
+			for (int i = 0; i < zone.Chaises.Count; i++) {
+				rect[0] = new RectangleF(zone.Chaises[i].X, zone.Chaises[i].Y, zone.LngCh, zone.LargCh);
+				if (zone.Chaises[i].Etat == 0) {
 					g.DrawString("X", new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, rect[0]);
 				} else {
-					g.DrawString((zone.chaises[i].numZone).ToString(), new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, rect[0]);
+					g.DrawString((zone.Chaises[i].Num).ToString(), new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, rect[0]);
 				}
 				g.DrawRectangles(new Pen(Color.Red), rect);
 			}
