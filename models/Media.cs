@@ -19,5 +19,6 @@ namespace stade.models {
 		public string Id { get; set; }
 		public string Des { get; set; }
 		public float Prix { get; set; }
+		public float NbRes { get; set; }
 	}
 }

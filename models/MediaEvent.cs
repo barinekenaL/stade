@@ -16,6 +16,7 @@ namespace stade.models {
 			this.Media = media;
 			this.Evenm = evenm;
 			this.Date = Tools.GetDate(date);
+			this.Date = this.Date.AddSeconds(2);
 		}
 
 		public string Id { get; set; }

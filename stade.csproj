@@ -50,6 +50,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +75,7 @@
     <Compile Include="models\Categ.cs" />
     <Compile Include="models\Chaise.cs" />
     <Compile Include="models\Evenement.cs" />
+    <Compile Include="models\Jour.cs" />
     <Compile Include="models\Media.cs" />
     <Compile Include="models\MediaEvent.cs" />
     <Compile Include="models\Position.cs" />

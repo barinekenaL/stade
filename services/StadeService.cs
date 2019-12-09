@@ -13,6 +13,11 @@ namespace stade.services {
 
 	internal class StadeService {
 
+		public static int GetNbRes(DateTime date, string idEvnm) {
+			Reservation res = Crud.Select("ReservationEvent", new Reservation(), "sum(nbChaise) as nbChaise", "idEvenm = '" + idEvnm + "' AND dateRes < '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'")[0];
+			return res.NbChaise;
+		}
+
 		public static string CheckChaise(string numChaise, string idZone) {
 			DbConnection connection = null;
 			try {

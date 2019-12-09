@@ -18,6 +18,10 @@ namespace stade.models {
 		public Reservation() {
 		}
 
+		public Reservation(DateTime date) {
+			this.Date = date;
+		}
+
 		public Reservation(string des, string numChaise, string date, string zone) {
 			this.Des = des;
 			this.NumCh = numChaise;

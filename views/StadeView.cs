@@ -81,5 +81,9 @@ namespace stade {
 			ReservationView reservation = new ReservationView();
 			reservation.Show();
 		}
+
+		private void graphe_Click(object sender, EventArgs e) {
+			new DashBoard().Show();
+		}
 	}
 }

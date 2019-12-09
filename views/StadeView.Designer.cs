@@ -40,6 +40,7 @@
 			this.err = new System.Windows.Forms.Label();
 			this.insert = new System.Windows.Forms.Button();
 			this.reservation = new System.Windows.Forms.Button();
+			this.graphe = new System.Windows.Forms.Button();
 			this.insertion.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -163,11 +164,22 @@
 			this.reservation.UseVisualStyleBackColor = true;
 			this.reservation.Click += new System.EventHandler(this.reservation_Click);
 			// 
+			// graphe
+			// 
+			this.graphe.Location = new System.Drawing.Point(12, 298);
+			this.graphe.Name = "graphe";
+			this.graphe.Size = new System.Drawing.Size(98, 23);
+			this.graphe.TabIndex = 7;
+			this.graphe.Text = "Graphe";
+			this.graphe.UseVisualStyleBackColor = true;
+			this.graphe.Click += new System.EventHandler(this.graphe_Click);
+			// 
 			// StadeView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1103, 595);
+			this.Controls.Add(this.graphe);
 			this.Controls.Add(this.reservation);
 			this.Controls.Add(this.insert);
 			this.Controls.Add(this.err);
@@ -199,6 +211,7 @@
         private System.Windows.Forms.Label err;
 		private System.Windows.Forms.Button insert;
 		private System.Windows.Forms.Button reservation;
+		private System.Windows.Forms.Button graphe;
 	}
 }
 
