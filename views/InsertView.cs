@@ -1,4 +1,5 @@
-﻿using stade.models;
+﻿using stade.dao;
+using stade.models;
 using stade.services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,9 @@ namespace stade.views {
 		private void BindCB() {
 			Tools.BindData(this.stadeEvent, "stade", new Stade(), null, "id", "des", "0");
 			Tools.BindData(this.stades, "stade", new Stade(), null, "id", "des", "0");
-			Tools.BindData(this.evnmts, "evenement", new Stade(), "stade = '" + Tools.GetKey(this.stades) + "'", "id", "des", "0");
+			Tools.BindData(this.evnmts, "evenement", new Evenement(), "stade = '" + Tools.GetKey(this.stades) + "'", "id", "des", "0");
+			Tools.BindData(this.mediaEvent, "evenement", new Evenement(), null, "id", "des", "0");
+			Tools.BindData(this.media, "media", new Media(), null, "id", "des", "0");
 		}
 
 		private void insererEvent_Click(object sender, EventArgs e) {
@@ -45,6 +48,25 @@ namespace stade.views {
 
 		private void insertZone_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
 			new ZoneView().Show();
+		}
+
+		private void insertMedia_Click(object sender, EventArgs e) {
+			if (this.desMedia.Text == "") {
+				MessageBox.Show("Designation media obligatoire !", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			Crud.Insert("media", new Media(this.desMedia.Text, Convert.ToSingle(this.prixMedia.Value)));
+			Tools.BindData(this.media, "media", new Media(), null, "id", "des", "0");
+			MessageBox.Show("Media inseré !", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private void ajouterMedia_Click(object sender, EventArgs e) {
+			if (this.mediaDate.Text == "") {
+				MessageBox.Show("Date non saisie !", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			Crud.Insert("mediaEvent", new MediaEvent(this.mediaDate.Text, Tools.GetKey(this.media), Tools.GetKey(this.mediaEvent)));
+			MessageBox.Show("insertion avec succès !", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }

@@ -14,6 +14,37 @@ namespace stade.services {
 
 	internal class Tools {
 
+		public static int[] GetNumChaise(string numChaise) {
+			try {
+				List<string> result = new List<string>();
+				string[] temp = null;
+				numChaise = numChaise.Trim(';');
+				temp = numChaise.Split(';');
+				string[] interval = null;
+				int debut = 0, fin = 0;
+				for (int i = 0; i < temp.Length; i++) {
+					interval = temp[i].Trim('-').Split('-');
+					if (interval.Length == 0) {
+						continue;
+					} else if (interval.Length == 1) {
+						result.Add(interval[0]);
+					} else {
+						debut = Convert.ToInt32(interval[0]);
+						fin = Convert.ToInt32(interval[1]);
+						if (fin < debut) {
+							throw new Exception("Chaine invalide >" + numChaise);
+						}
+						for (int j = debut; j < fin + 1; j++) {
+							result.Add(j.ToString());
+						}
+					}
+				}
+				return result.Select(x => Convert.ToInt32(x)).ToArray();
+			} catch (Exception) {
+				throw;
+			}
+		}
+
 		public static string GetKey(ComboBox c) {
 			return ((KeyValuePair<string, string>)c.SelectedItem).Key;
 		}

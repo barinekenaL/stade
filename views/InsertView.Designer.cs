@@ -268,7 +268,7 @@
 			this.groupBox3.Controls.Add(this.mediaDate);
 			this.groupBox3.Controls.Add(this.label120);
 			this.groupBox3.Controls.Add(this.label123);
-			this.groupBox3.Location = new System.Drawing.Point(343, 14);
+			this.groupBox3.Location = new System.Drawing.Point(343, 6);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(722, 74);
 			this.groupBox3.TabIndex = 5;
@@ -277,6 +277,7 @@
 			// 
 			// media
 			// 
+			this.media.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.media.FormattingEnabled = true;
 			this.media.Location = new System.Drawing.Point(445, 33);
 			this.media.Name = "media";
@@ -294,6 +295,7 @@
 			// 
 			// mediaEvent
 			// 
+			this.mediaEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.mediaEvent.FormattingEnabled = true;
 			this.mediaEvent.Location = new System.Drawing.Point(259, 33);
 			this.mediaEvent.Name = "mediaEvent";
@@ -302,12 +304,13 @@
 			// 
 			// ajouterMedia
 			// 
-			this.ajouterMedia.Location = new System.Drawing.Point(583, 34);
+			this.ajouterMedia.Location = new System.Drawing.Point(583, 33);
 			this.ajouterMedia.Name = "ajouterMedia";
-			this.ajouterMedia.Size = new System.Drawing.Size(128, 23);
+			this.ajouterMedia.Size = new System.Drawing.Size(128, 24);
 			this.ajouterMedia.TabIndex = 6;
 			this.ajouterMedia.Text = "Ajouter";
 			this.ajouterMedia.UseVisualStyleBackColor = true;
+			this.ajouterMedia.Click += new System.EventHandler(this.ajouterMedia_Click);
 			// 
 			// mediaDate
 			// 
@@ -315,6 +318,7 @@
 			this.mediaDate.Name = "mediaDate";
 			this.mediaDate.Size = new System.Drawing.Size(113, 22);
 			this.mediaDate.TabIndex = 4;
+			this.mediaDate.Text = "01/12/2019";
 			// 
 			// label120
 			// 
@@ -343,21 +347,21 @@
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Location = new System.Drawing.Point(6, 6);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(244, 132);
+			this.groupBox2.Size = new System.Drawing.Size(320, 132);
 			this.groupBox2.TabIndex = 4;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Nouvelle média";
 			// 
 			// prixMedia
 			// 
-			this.prixMedia.Location = new System.Drawing.Point(110, 59);
+			this.prixMedia.Location = new System.Drawing.Point(110, 52);
 			this.prixMedia.Maximum = new decimal(new int[] {
             999999,
             0,
             0,
             0});
 			this.prixMedia.Name = "prixMedia";
-			this.prixMedia.Size = new System.Drawing.Size(113, 22);
+			this.prixMedia.Size = new System.Drawing.Size(204, 22);
 			this.prixMedia.TabIndex = 7;
 			this.prixMedia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.prixMedia.ThousandsSeparator = true;
@@ -369,24 +373,25 @@
 			// 
 			// insertMedia
 			// 
-			this.insertMedia.Location = new System.Drawing.Point(110, 96);
+			this.insertMedia.Location = new System.Drawing.Point(201, 80);
 			this.insertMedia.Name = "insertMedia";
 			this.insertMedia.Size = new System.Drawing.Size(113, 23);
 			this.insertMedia.TabIndex = 6;
 			this.insertMedia.Text = "Inserer";
 			this.insertMedia.UseVisualStyleBackColor = true;
+			this.insertMedia.Click += new System.EventHandler(this.insertMedia_Click);
 			// 
 			// desMedia
 			// 
 			this.desMedia.Location = new System.Drawing.Point(110, 21);
 			this.desMedia.Name = "desMedia";
-			this.desMedia.Size = new System.Drawing.Size(113, 22);
+			this.desMedia.Size = new System.Drawing.Size(204, 22);
 			this.desMedia.TabIndex = 4;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 65);
+			this.label5.Location = new System.Drawing.Point(6, 57);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(31, 17);
 			this.label5.TabIndex = 2;
@@ -450,7 +455,6 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox media;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.ComboBox mediaEvent;
 		private System.Windows.Forms.Button ajouterMedia;
 		private System.Windows.Forms.TextBox mediaDate;
 		private System.Windows.Forms.Label label120;
@@ -463,5 +467,6 @@
 		private System.Windows.Forms.Button voir;
 		private System.Windows.Forms.ComboBox stades;
 		private System.Windows.Forms.LinkLabel insertZone;
+		private System.Windows.Forms.ComboBox mediaEvent;
 	}
 }

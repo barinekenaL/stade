@@ -13,6 +13,38 @@ namespace stade.services {
 
 	internal class StadeService {
 
+		public static string CheckChaise(string numChaise, string idZone) {
+			DbConnection connection = null;
+			try {
+				connection = DbConnect.Connect();
+				string notIn = "";
+				string reserved = "";
+				int[] numCh = Tools.GetNumChaise(numChaise);
+				Chaise[] temp = null;
+				for (int i = 0; i < numCh.Length; i++) {
+					temp = Crud.Select("chaise", new Chaise(), "", "zone = '" + idZone + "' and num = " + numCh[i].ToString() + "", connection);
+					if (temp.Length == 0) {
+						notIn += numCh[i].ToString() + ", ";
+					} else if (temp[0].Etat == 2) {
+						reserved += numCh[i].ToString() + ", ";
+					}
+				}
+				string result = "";
+				if (notIn != "") {
+					result += "Numero invalid >" + notIn.Substring(0, notIn.Length - 1) + "\n";
+				}
+				if (reserved != "") {
+					result += "Numero dejà reservé >" + reserved;
+				}
+				return result;
+			} catch (Exception) {
+				throw;
+			} finally {
+				if (connection != null) {
+				}
+			}
+		}
+
 		public static void Bh_dg(Region region, RectangleF bounds, Zone zone, int num1, float lngCh, float largCh, float espAv, float espCote) {
 			float x = 0, dx = lngCh + espCote;
 			float y = 0, dy = largCh + espAv;

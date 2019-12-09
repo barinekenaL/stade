@@ -74,7 +74,10 @@
     <Compile Include="models\Categ.cs" />
     <Compile Include="models\Chaise.cs" />
     <Compile Include="models\Evenement.cs" />
+    <Compile Include="models\Media.cs" />
+    <Compile Include="models\MediaEvent.cs" />
     <Compile Include="models\Position.cs" />
+    <Compile Include="models\Reservation.cs" />
     <Compile Include="models\Stade.cs" />
     <Compile Include="models\Zone.cs" />
     <Compile Include="services\DrawService.cs" />
