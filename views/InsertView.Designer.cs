@@ -149,6 +149,7 @@
 			this.voir.TabIndex = 1;
 			this.voir.Text = "Voir";
 			this.voir.UseVisualStyleBackColor = true;
+			this.voir.Click += new System.EventHandler(this.voir_Click);
 			// 
 			// stades
 			// 

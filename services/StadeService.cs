@@ -351,6 +351,7 @@ namespace stade.services {
 				Zone zone = null;
 				zone = StadeService.Simuler(StadeService.GetPoints(points), num1, direction, sens, lngCh, largCh, espAv, espCote, estimation, pu);
 				zone.SetData(evenm, des, estimation, pu);
+				zone.NbChaise = zone.Chaises.Count();
 				Crud.Insert("zone", zone, connection);
 				string idZone = Crud.CurrentId("zone");
 				zone.Chaises.Select(c => { c.Zone = idZone; return c; }).ToList();

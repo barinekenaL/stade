@@ -52,14 +52,31 @@ namespace stade.views {
 		}
 
 		private void ReservationView_Load(object sender, EventArgs e) {
+			// reservation
 			Tools.BindData(this.evnm, "evenement", new Evenement(), null, "id", "des", "0");
 			Tools.BindData(this.zoneRes, "zone", new Zone(), "evenm = '" + Tools.GetKey(this.evnm) + "'", "id", "des", "0");
 			this.dateRes.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+			// raprochement
+			Tools.BindData(this.evenement, "evenement", new Evenement(), null, "id", "des", "0");
+			Tools.BindData(this.zone, "zone", new Zone(), "evenm = '" + Tools.GetKey(this.evenement) + "'", "id", "des", "0");
+			this.date.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 		}
 
 		private void evnm_SelectedIndexChanged(object sender, EventArgs e) {
 			Tools.BindData(this.zoneRes, "zone", new Zone(), "evenm = '" + Tools.GetKey(this.evnm) + "'", "id", "des", "0");
 			this.dateRes.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+		}
+
+		private void evenement_SelectedIndexChanged(object sender, EventArgs e) {
+			Tools.BindData(this.zone, "zone", new Zone(), "evenm = '" + Tools.GetKey(this.evenement) + "'", "id", "des", "0");
+			this.date.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+		}
+
+		private void voir_Click(object sender, EventArgs e) {
+			Zone zone = Crud.Select("zone", new Zone(), "", "id = '" + Tools.GetKey(this.zone) + "'")[0];
+			zone.Reservations = Crud.Select("reservation", new Reservation(), "", "zone = '" + Tools.GetKey(this.zone) + "' and date <= '" + Tools.GetDate(this.date.Text).ToString() + "'").ToList();
+			this.table.Rows.Clear();
+			this.table.Rows.Add(zone.Pu.ToString(), zone.Estimation.ToString(), zone.GetPrixEst().ToString(), zone.GetSituationActuel().ToString(), zone.GetPrixActuel());
 		}
 	}
 }

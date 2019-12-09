@@ -110,6 +110,11 @@ namespace stade {
 		}
 
 		private void showCurrZones() {
+			if (this.stade.Evenmts.Count == 0) {
+				MessageBox.Show("Aucun eevenement trouvé !", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				this.Close();
+				return;
+			}
 			if (this.stade != null) {
 				DrawService.DrawPolygon(this.panel, StadeService.GetListBox(this.stade.Points), new Pen(Color.Green));
 				DrawService.ShowZone(this.panel, this.stade.Evenmts[Tools.GetKey(this.evenm)].Zones, this.pen);

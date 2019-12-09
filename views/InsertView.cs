@@ -68,5 +68,9 @@ namespace stade.views {
 			Crud.Insert("mediaEvent", new MediaEvent(this.mediaDate.Text, Tools.GetKey(this.media), Tools.GetKey(this.mediaEvent)));
 			MessageBox.Show("insertion avec succès !", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
+
+		private void voir_Click(object sender, EventArgs e) {
+			new ZoneView().Show();
+		}
 	}
 }

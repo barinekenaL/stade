@@ -8,8 +8,20 @@ namespace stade.models {
 
 	internal class Zone {
 
+		public float GetSituationActuel() {
+			return 100 * this.Reservations.Sum(x => x.NbChaise) / this.NbChaise;
+		}
+
+		public float GetPrixActuel() {
+			return this.Pu * this.Reservations.Sum(x => x.NbChaise);
+		}
+
 		public float GetPrixEstimer() {
 			return this.Pu * this.GetPlaceEstimer();
+		}
+
+		public float GetPrixEst() {
+			return this.Pu * this.NbChaise;
 		}
 
 		public float GetPlaceEstimer() {
@@ -58,6 +70,9 @@ namespace stade.models {
 		public string Evenm { get; set; }
 		public float Estimation { get; set; }
 		internal List<Chaise> Chaises { get; set; } = new List<Chaise>();
+		internal List<Reservation> Reservations { get; set; } = new List<Reservation>();
 		public float Pu { get; set; }
+
+		public int NbChaise { get; set; }
 	}
 }
